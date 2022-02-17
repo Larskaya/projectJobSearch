@@ -1,0 +1,7 @@
+/flask_job_searching/__pycache__
+/flask_job_searching/*/__pycache__
+/flask_job_searching/static_build
+
+/flask_job_searching/mem.txt
+/react_job_searching/node_modules
+*build
