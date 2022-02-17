@@ -45,8 +45,11 @@ a {
     align-items: center;
 }
 
+.error {
+    background-color: rgb(204, 30, 30);
+}
 
-.un.success-register {
+.unsuccess-register {
     background-color: rgb(204, 30, 30);
 }
 

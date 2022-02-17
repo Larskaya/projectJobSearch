@@ -1,7 +1,4 @@
-import { useState } from 'react';
-// import axios from 'axios';
-// import { useHistory } from "react-router-dom";
-
+import { useEffect, useState } from 'react';
 
 export default function SignUpForm() {
 
@@ -31,18 +28,18 @@ export default function SignUpForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (login === '' || email === '' || password === '') {
-            setError(true);
+            return (
+                <h> enter fields </h>
+            );
         } else {
-            if (validateEmail(email) & validateLogin(login) & validatePassword(password)) {
-                // setEmail('');
-                // setLogin('');
-                // setPassword('');
+            if (validateEmail(email) && validateLogin(login) && validatePassword(password)) {
                 setSubmitted(true);
-                setError(false);
                 goToAuth();
             } else {
-                setError(true);
-            }
+                return (
+                    <h> invalid data </h>
+                );
+            };
         };
     };
 
@@ -51,6 +48,7 @@ export default function SignUpForm() {
         setSubmitted(false);
     }
 
+    
     const successMessage = () => {
         return (
         <div
@@ -63,31 +61,28 @@ export default function SignUpForm() {
         );
     };
 
-
-    const errorMessage = () => {
+    const error409 = () => {
         return (
-        <div
-            className="error"
-            style={{
-                display: error ? '' : 'none',
-            }}>
-            <h3 className='unsuccess-register'> enter all the fields </h3>
-        </div>
+            <div style={{
+                display: error ? '' : 'none', }}
+                className='error'> 
+                <h3> data already in use </h3> 
+            </div>
         );
     };
 
 
     const validateEmail = (email) => {
+        console.log('email', email)
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  
         return String(email)
             .toLowerCase()
-            .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
+            .match(re);
     };
 
     const validateLogin = (login) => {
         return login.length >= 8;
-        // return login.match(/a-zA-Z\0-9/);
     };
 
     const validatePassword = (psw) => {
@@ -96,35 +91,34 @@ export default function SignUpForm() {
 
 
     const goToAuth = () => {
-
-        console.log('attempt to add user');
-        (async () => {
-            const rawResponse = await fetch('/api/register', {
-                method: 'POST',
-                headers: {
-                    // 'Access-Control-Allow-Origin': '*',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                
-                body: JSON.stringify({'login': login, 'email': email, 'password': password, 'type': type})
-            });
-            const content = await rawResponse.json();
-            window.location.href = '/auth';
-        })();
+        fetch('http://127.0.0.1:5000/api/register', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            
+            body: JSON.stringify({'login': login, 'email': email, 'password': password, 'type': type})
+        }).then(response => {
+            console.log('response:', response)
+            if (response.ok) {
+                window.location.href = '/auth';
+            } else if (response.status === 409) {
+                console.log('\t this is conflict!!');
+                setError(true);
+            };
+        }).then(data => console.log('data:', data));
     };
 
 
     return (
         <div className="form">
             <div>
-                <h3> registration </h3>
+                <h2> registration </h2>
             </div>
 
-            <div className="messages">
-                {errorMessage()}
-                {successMessage()}
-            </div>
+            {error409()}
+            {successMessage()}
 
             <form>
                 <label className="label"> login </label>

@@ -9,7 +9,11 @@ def connect_db():
     conn = False
     try:
         conn = psycopg2.connect(
-            
+            database="job_searching", 
+            user="postgres", 
+            password="bDpWbcCj6aQkg3aH",
+            host="localhost", 
+            port="5431"
         )
     except Exception as e:
         print('connection error', str(e))
@@ -37,6 +41,7 @@ def after_request(response):
 from routs import registration, authorization, vacancies
 
 if __name__ == '__main__':
+    os.environ['FLASK_ENV'] = 'development'
     app.run(debug=True)
     # app.run()
     # app.run(port=3000)
