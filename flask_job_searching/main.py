@@ -38,11 +38,9 @@ def after_request(response):
     response.headers['Access-Control-Allow-Headers'] = '*'
     return response
 
-from routs import registration, authorization, vacancies
+from routs import registration, login, logout, vacancies
 
 if __name__ == '__main__':
     os.environ['FLASK_ENV'] = 'development'
     app.run(debug=True)
-    # app.run()
-    # app.run(port=3000)
 

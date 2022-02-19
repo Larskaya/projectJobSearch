@@ -3,7 +3,6 @@ import Routs from "./components/Routs"
 
 import './styles/App.css'
 
-
  
 function App() {
   return (

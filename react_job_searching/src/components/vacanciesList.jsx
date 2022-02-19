@@ -1,6 +1,8 @@
 import React from "react";
 import VacancyItem from "./vacancyItem";
-
+import VcancyRepository from "../repositories/vacancy";
+import url from '../repositories/url';
+let v_rep = new VcancyRepository(url);
 
 class VacanciesList extends React.Component {
 
@@ -10,22 +12,18 @@ class VacanciesList extends React.Component {
             vacancies: []
         };
     }
-
-    async getVacancies() {
-        const response = await fetch('/api/vacancies');  // {headres: {Authentication: `Bearer ${token}`}
-        const data = await response.json();
-        this.setState({ vacancies: data })
-        console.log('data', this.state.vacancies);
-    };
+    
 
     async componentDidMount() {
-        const vacs = await this.getVacancies();
+        const vacs = await v_rep.getVacancies();
         if (!vacs) {
             return (
                 <h1 style={{textAlign: 'center'}}>
                     vacancies not found!
                 </h1>
             );
+        } else {
+            this.setState({vacancies: vacs});
         };
     };
         

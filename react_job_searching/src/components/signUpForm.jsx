@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import UserRepository from '../repositories/user';
+import url from '../repositories/url';
 
 export default function SignUpForm() {
 
@@ -34,7 +36,9 @@ export default function SignUpForm() {
         } else {
             if (validateEmail(email) && validateLogin(login) && validatePassword(password)) {
                 setSubmitted(true);
-                goToAuth();
+                let u_rep = new UserRepository(url);
+                u_rep.logIn(login, email, password, type);
+
             } else {
                 return (
                     <h> invalid data </h>
@@ -49,17 +53,17 @@ export default function SignUpForm() {
     }
 
     
-    const successMessage = () => {
-        return (
-        <div
-            className="success"
-            style={{
-            display: submitted ? '' : 'none',
-            }}>
-            <h3 className='success-register'> successfully registered </h3>
-        </div>
-        );
-    };
+    // const successMessage = () => {
+    //     return (
+    //     <div
+    //         className="success"
+    //         style={{
+    //             display: submitted ? '' : 'none',
+    //         }}>
+    //         <h3 className='success-register'> successfully registered </h3>
+    //     </div>
+    //     );
+    // };
 
     const error409 = () => {
         return (
@@ -73,7 +77,6 @@ export default function SignUpForm() {
 
 
     const validateEmail = (email) => {
-        console.log('email', email)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   
         return String(email)
@@ -89,27 +92,7 @@ export default function SignUpForm() {
         return psw.length >= 8;
     };
 
-
-    const goToAuth = () => {
-        fetch('http://127.0.0.1:5000/api/register', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            
-            body: JSON.stringify({'login': login, 'email': email, 'password': password, 'type': type})
-        }).then(response => {
-            console.log('response:', response)
-            if (response.ok) {
-                window.location.href = '/auth';
-            } else if (response.status === 409) {
-                console.log('\t this is conflict!!');
-                setError(true);
-            };
-        }).then(data => console.log('data:', data));
-    };
-
+    
 
     return (
         <div className="form">
@@ -118,24 +101,24 @@ export default function SignUpForm() {
             </div>
 
             {error409()}
-            {successMessage()}
+            {/* {successMessage()} */}
 
             <form>
                 <label className="label"> login </label>
                 <input onChange={handleLogin} className="input"
-                defaultValue='qwertyuio' type="text" />
+                defaultValue={login} type="text" />
 
                 <label className="label"> email </label>
                 <input onChange={handleEmail} className="input"
-                defaultValue='qwertyuio@mail.com' type="email" />
+                defaultValue={email} type="email" />
 
                 <label className="label"> password </label>
                 <input onChange={handlePassword} className="input"
-                defaultValue='12345678' type="password" />
+                defaultValue={password} type="password" />
 
                 <div>
                     are you an employer or an employee? 
-                    <select defaultValue={'DEFAULT'} onChange={handleSelectType}>
+                    <select defaultValue={type} onChange={handleSelectType}>
                         <option value="DEFAULT">employer</option>
                         <option value="employee">employee</option>
                     </select>

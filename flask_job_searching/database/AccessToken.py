@@ -7,6 +7,7 @@ class AccessTokenDB:
         self.__db = db
         self.__cur = db.cursor()
 
+
     def _auth_user(self, user_id, token):
         try:
             created_at = datetime.datetime.now()
@@ -17,3 +18,21 @@ class AccessTokenDB:
             return False
         return True
 
+
+    def _check_token(self, token):
+        self.__cur.execute('select token from access_tokens where token = %s', (token, ) )
+        is_exist = self.__cur.fetchone()
+        if is_exist[0]:
+            return True
+        else:
+            return False
+
+
+    def _delete_token(self, token):
+        try:
+            self.__cur.execute('delete from access_tokens where token = %s', (token, ))
+            self.__db.commit()
+        except psycopg2.Error as e:
+            print('logout failed  - '+ str(e))
+            return False
+        return True

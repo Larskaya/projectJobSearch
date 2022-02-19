@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import SignUpForm from "./signUpForm";
 import SignInForm from "./signInForm";
+import SignOutForm from "./signOutForm";
 import VacanciesList from "./vacanciesList";
 
 const Main = function () {
@@ -17,7 +18,7 @@ const Menu = function () {
     <div className='header-menu'>
           <a href="/"> start page </a>
           <a href="/register"> sign up </a>
-          <a href="/auth"> sign in </a>
+          <a href="/login"> sign in </a>
           <a href="/vacancies"> vacancies </a>
     </div>
   );
@@ -39,8 +40,12 @@ export default function Routs() {
               element={<SignUpForm />}
             />
             <Route
-              path="/auth"
+              path="/login"
               element={<SignInForm />}
+            />
+            <Route
+              path="/logout"
+              element={<SignOutForm />}
             />
             <Route
               path="/vacancies"

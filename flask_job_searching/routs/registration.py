@@ -2,29 +2,28 @@
 from __main__ import app, get_db
 from database.User import *
 from werkzeug.security import generate_password_hash
-from flask import g, jsonify, request
+from flask import jsonify, request
 
 from base import Base 
 
 
 @app.route('/api/register', methods=['POST'])
 def registration():
-    print('\tregister')
-    g.user = UserDB( get_db() )
-    g.base = Base()
+    # print('\tregister')
+    user_db = UserDB( get_db() )
+    base = Base()
 
     if request.method == 'POST':
         user_data = request.json
-        if g.base._check_validation(user_data):
+        if base._check_validation(user_data):
 
             login, email, type_ = user_data['login'], user_data['email'], user_data['type']
-            print(f'\ttype: {type_}')
 
             if type_ == 'employee': t = 2
             elif type_ == 'employer': t = 1
             
             hpsw = generate_password_hash(user_data['password'])
-            result = g.user._add_user(login, hpsw, email, t)
+            result = user_db._add_user(login, hpsw, email, t)
         
             if result: 
                 return jsonify( {'success': True} ), 200
