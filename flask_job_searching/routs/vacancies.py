@@ -14,15 +14,16 @@ def vacancies():
         
         token = None
         try:
-            token = request.json['token']
+            token = request.headers['Authorization']
+            print('token', token)
         except Exception as e:
             print('token has been received with error:', e)
 
         if not token:
-            return jsonify( {'success': False, 'error': 'not found token'} )
+            return jsonify( {'success': False, 'error': 'not found token'} ), 401
 
         if not access_token_db._check_token(token):
-            return jsonify( {'success': False, 'error': 'incorrect token'} )
+            return jsonify( {'success': False, 'error': 'incorrect token'} ), 401
 
         vacancy_db = VacancyDB( get_db() )
         vacancies = vacancy_db._get_vacancies()

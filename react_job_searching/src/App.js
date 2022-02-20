@@ -1,5 +1,5 @@
 import React from "react";
-import Routs from "./components/Routs"
+import NavigationBar from './components/navigation';
 
 import './styles/App.css'
 
@@ -9,7 +9,7 @@ function App() {
     
     <div className="App">
       {/* <SignUpForm/> */}
-      <Routs/>
+      <NavigationBar />
     </div>
      
   );

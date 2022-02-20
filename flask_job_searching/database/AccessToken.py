@@ -22,8 +22,9 @@ class AccessTokenDB:
     def _check_token(self, token):
         self.__cur.execute('select token from access_tokens where token = %s', (token, ) )
         is_exist = self.__cur.fetchone()
-        if is_exist[0]:
-            return True
+        if is_exist:
+            if is_exist[0]:
+                return True
         else:
             return False
 

@@ -9,7 +9,11 @@ def connect_db():
     conn = False
     try:
         conn = psycopg2.connect(
-           
+            database="job_searching", 
+            user="postgres", 
+            password="bDpWbcCj6aQkg3aH",
+            host="localhost", 
+            port="5431"
         )
     except Exception as e:
         print('connection error', str(e))
