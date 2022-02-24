@@ -9,6 +9,7 @@ import SignUpForm from "./signUpForm";
 import SignInForm from "./signInForm";
 import SignOutForm from "./signOutForm";
 import VacanciesList from "./vacanciesList";
+import VacancyOpen from "./vacancyOpen";
 
 
 const Main = function () {
@@ -22,18 +23,22 @@ const Main = function () {
             <a href="/register"> sign up </a>
             <a href="/login"> sign in </a>
             <a href="/logout"> sign out </a>
-            <a href="/vacancies"> vacancies </a>
       </div>
     );
   };
 
+  const Vacancies = function () {
+      return (
+          <div>
+            <a href="/vacancies"> vacancies </a>
+          </div>
+      )
+  }
 
 export default function NavigationBar() {
-
-    // <Routs/>
-    if (localStorage.getItem('token')) {
-        return (
-            <>
+    return (
+        <>
+            <nav>
             <Menu/>
                 <Router>
                     <Routes>
@@ -45,20 +50,11 @@ export default function NavigationBar() {
                             path="/logout"
                             element={<SignOutForm />}
                         />
+
                         <Route
-                            path="/vacancies"
-                            element={<VacanciesList />}
+                            path="/"
+                            element={<Main />}
                         />
-                    </Routes>
-                </Router>
-            </>
-        );
-    } else {
-        return (
-            <>
-            <Menu/>
-                <Router>
-                    <Routes> 
                         <Route
                             path="/register"
                             element={<SignUpForm />}
@@ -67,9 +63,23 @@ export default function NavigationBar() {
                             path="/login"
                             element={<SignInForm />}
                         />
+                        
                     </Routes>
                 </Router>
-            </>
-        );
-    };
+            </nav>
+            <Vacancies/>
+            <Router>
+                <Routes>
+                    <Route 
+                        path="/vacancies" element={<VacanciesList />} 
+                    />
+
+                    <Route
+                        path="/vacancies/:vacancy_id" element={<VacancyOpen />}
+                    /> 
+                </Routes>
+            </Router>
+        </>
+        
+    );
 }

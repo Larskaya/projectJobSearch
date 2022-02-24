@@ -46,3 +46,4 @@ def vacancies():
 
     return None, 405
 
+

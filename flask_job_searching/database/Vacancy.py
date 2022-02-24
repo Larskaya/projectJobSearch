@@ -9,4 +9,14 @@ class VacancyDB:
     def _get_vacancies(self):
         self.__cur.execute('select * from vacancies')
         vacancies = self.__cur.fetchall()
-        return vacancies
+        if vacancies:
+            return vacancies
+        return None
+
+    def _get_vacancy_from_id(self, vacancy_id):
+        self.__cur.execute('select * from vacancies where id=%s', (vacancy_id, ))
+        vacancy = self.__cur.fetchone()
+        print('vacancy from db:', vacancy)
+        if vacancy:
+            return vacancy
+        return None

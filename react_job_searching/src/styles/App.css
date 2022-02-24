@@ -83,3 +83,21 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+
+.open-btn {
+    width: 100px;
+    height: 50px;
+    background-color: rgb(182, 195, 207);
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10vh;
+    background: rgb(51, 110, 158);
+    color: rgb(215, 235, 236);
+    border: 2px solid rgb(0, 0, 0);
+}

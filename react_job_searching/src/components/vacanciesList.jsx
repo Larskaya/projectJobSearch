@@ -1,8 +1,8 @@
 import React from "react";
 import VacancyItem from "./vacancyItem";
-import VcancyRepository from "../repositories/vacancy";
+import VacancyRepository from "../repositories/vacancy";
 import url from '../repositories/url';
-let v_rep = new VcancyRepository(url);
+let v_rep = new VacancyRepository(url);
 
 class VacanciesList extends React.Component {
 

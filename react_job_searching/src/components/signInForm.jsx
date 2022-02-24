@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import UserRepository from '../repositories/user'
-import VcancyRepository from '../repositories/vacancy'
+import VacancyRepository from '../repositories/vacancy'
 import url from '../repositories/url';
 
 let u_rep = new UserRepository(url);
-let v_rep = new VcancyRepository(url);
+let v_rep = new VacancyRepository(url);
 
 export default function SignInForm() {
     const [email, setEmail] = useState('');

@@ -1,18 +1,30 @@
-class VcancyRepository {
+class VacancyRepository {
     constructor(url) {
         this.url = url;
     }
 
     async getVacancies() {
-        const response = await fetch('http://127.0.0.1:5000/api/vacancies', 
+        const response = await fetch(`${this.url}/api/vacancies`, 
             {
-                headers: {'Authorization': localStorage.getItem('token')}
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
             }
-        );  // {headres: {Authentication: `Bearer ${token}`}
+        ); 
         const data = await response.json();
-        // this.setState({ vacancies: data })
+        return data
+    };
+
+    async getVacancy(vacancyId) {
+        const response = await fetch(`${this.url}/api/vacancies/${vacancyId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
+        const data = await response.json();
         return data
     };
 };
 
-export default VcancyRepository;
+export default VacancyRepository;
