@@ -1,65 +1,43 @@
-// import { useParams } from "react-router-dom";
-import React from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import VacancyRepository from "../repositories/vacancy";
 import url from '../repositories/url';
 let vRep = new VacancyRepository(url);
-// const VacancyOpen = (props) => {
-class VacancyOpen extends React.Component {
-    // let { vacancy_id } = useParams();
-    constructor(props) {
-        super(props);
-        this.state = {
-            vacancy: []
-        };
-    }
-
-    async componentDidMount() {
-        console.log('props:', this.props)
-        const vac = await vRep.getVacancy(this.props.vacancy_id);
-        if (!vac) {
-            return (
-                <h1 style={{textAlign: 'center'}}>
-                    vacancy not found!
-                </h1>
-            );
-        } else {
-            this.setState({vacancy: vac});
-            console.log('vac : ', this.state)
-        };
-    };
-
-    // const openVacancy = async () => {
-    //     let vacancy_id = props.vacancy['id'];
-    //     let vacancy = await v_rep.getVacancy(vacancy_id);
-
-    //     console.log('vacancy:', vacancy)
-    //     console.log('vacancy success:', vacancy['success'])
-    //     if (vacancy['success']) {
-    //         console.log('kek');
-            
-    //         // <VacancyOpen props={vacancy['data']}/>;
-    //     }
-    // }
 
 
-    // console.log('vac id:', vacancy_id)
-    // let [searchParams, setSearchParams] = useSearchParams();
-    // console.log('search params', searchParams.getAll());
+const VacancyOpen = () => {
+    const [vacancy, setVacancy] = useState();
+    const [review, setReview] = useState();
+    let { vacancy_id } = useParams();
+    useEffect(() => {
+        vRep.getVacancy(vacancy_id)
+            .then((vacData) => {
+                // console.log('vac data:', vacData);
+                setVacancy(vacData);
+            });
+    }, [])
+        
+    //     
+    //     if (!vac) {
+    //         return (
+    //             <h1 style={{textAlign: 'center'}}>
+    //                 vacancy not found!
+    //             </h1>
+    //         );
+    //     } 
 
-    render (){
-        return  (
-            <div className='vacancy'>
-
-                <div className='vacancy_content'>
-                    <div>kek  </div>
-                    <h3> {this.state.vacancy['title']}</h3>
-                    {/* <h3> {{props}} </h3>   */}
-                    {/* // <div> {props.vacancy['description']} </div> */}
-                    
-                </div>
+    return  (
+        <div className='open_vacancy_page'>
+            <div className='open_vacancy'>
+                <h3> {vacancy && vacancy['title']}</h3>
+                <div> {vacancy && vacancy['description']} </div>
             </div>
-        )
-    }
+            <div className='vacancy_review'>
+                review:
+                <input type="text"/>
+            </div>
+        </div>
+    );
 };
 
 export default VacancyOpen;

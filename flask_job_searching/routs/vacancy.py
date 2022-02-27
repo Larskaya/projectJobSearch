@@ -24,7 +24,13 @@ def get_vacancy(vacancy_id):
     vacancy_db = VacancyDB( get_db() )
     print('vacancy id:', vacancy_id)
 
+    # vacancy_id = 10
     vacancy = vacancy_db._get_vacancy_from_id(vacancy_id)
     if vacancy:
-        return jsonify( {'success': True, 'data': vacancy} ), 200
+        # vacancy = {
+        #     'title': vacancy[1], 
+        #     'description': vacancy[2], 
+        #     'owner': vacancy[3]
+        # }
+        return jsonify( {'title': vacancy[1], 'description': vacancy[2], 'owner': vacancy[3]} ), 200
     return jsonify( {'success': False, 'error': 'page not found'} ), 404

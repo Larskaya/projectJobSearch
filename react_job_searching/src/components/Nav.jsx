@@ -23,6 +23,7 @@ const Main = function () {
             <a href="/register"> sign up </a>
             <a href="/login"> sign in </a>
             <a href="/logout"> sign out </a>
+            <a href="/vacancies"> vacancies </a>
       </div>
     );
   };
@@ -37,49 +38,43 @@ const Main = function () {
 
 export default function NavigationBar() {
     return (
-        <>
+        <Router>
             <nav>
-            <Menu/>
-                <Router>
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Main />}
-                        />
-                        <Route
-                            path="/logout"
-                            element={<SignOutForm />}
-                        />
-
-                        <Route
-                            path="/"
-                            element={<Main />}
-                        />
-                        <Route
-                            path="/register"
-                            element={<SignUpForm />}
-                        />
-                        <Route
-                            path="/login"
-                            element={<SignInForm />}
-                        />
-                        
-                    </Routes>
-                </Router>
-            </nav>
-            <Vacancies/>
-            <Router>
+                <Menu/>
                 <Routes>
+                    <Route
+                        path="/logout"
+                        element={<SignOutForm />}
+                    />
+                    <Route
+                        path="/register"
+                        element={<SignUpForm />}
+                    />
+                    <Route
+                        path="/login"
+                        element={<SignInForm />}
+                    />
+                    <Route
+                        path="/"
+                        element={<Main />}
+                    />
                     <Route 
                         path="/vacancies" element={<VacanciesList />} 
                     />
-
                     <Route
                         path="/vacancies/:vacancy_id" element={<VacancyOpen />}
                     /> 
                 </Routes>
-            </Router>
-        </>
-        
+            </nav>
+            {/* <Vacancies/> */}
+            {/* <Routes>
+                <Route 
+                    path="/vacancies" element={<VacanciesList />} 
+                />
+                <Route
+                    path="/vacancies/:vacancy_id" element={<VacancyOpen />}
+                /> 
+            </Routes> */}
+        </Router>
     );
 }
