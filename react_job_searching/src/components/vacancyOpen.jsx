@@ -2,29 +2,30 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import VacancyRepository from "../repositories/vacancy";
 import url from '../repositories/url';
-let vRep = new VacancyRepository(url);
-
+// import ReviewsList from "./reviewsList";
+import ReviewRepository from "../repositories/review";
+let vacancyRep = new VacancyRepository(url);
+let reviewRep = new ReviewRepository(url);
 
 const VacancyOpen = () => {
     const [vacancy, setVacancy] = useState();
-    const [review, setReview] = useState();
+    const [reviews, setReviews] = useState();
+
     let { vacancy_id } = useParams();
+
     useEffect(() => {
-        vRep.getVacancy(vacancy_id)
+        vacancyRep.getVacancy(vacancy_id)
             .then((vacData) => {
-                // console.log('vac data:', vacData);
                 setVacancy(vacData);
             });
     }, [])
-        
-    //     
-    //     if (!vac) {
-    //         return (
-    //             <h1 style={{textAlign: 'center'}}>
-    //                 vacancy not found!
-    //             </h1>
-    //         );
-    //     } 
+
+    useEffect(() => {
+        reviewRep.getReviews(vacancy_id)
+            .then((reviewData) => {
+                setReviews(reviewData);
+            });
+    }, [])
 
     return  (
         <div className='open_vacancy_page'>
@@ -33,8 +34,10 @@ const VacancyOpen = () => {
                 <div> {vacancy && vacancy['description']} </div>
             </div>
             <div className='vacancy_review'>
-                review:
-                <input type="text"/>
+                Reviews:
+                <input type="text" value="review"/>
+                {/* <ReviewsList/> */}
+                {reviews}
             </div>
         </div>
     );

@@ -1,8 +1,8 @@
 
 from __main__ import app, get_db
-from database.Vacancy import *
 from flask import jsonify, request
 
+from database.Vacancy import *
 from database.AccessToken import *
 
 
@@ -26,6 +26,7 @@ def vacancies():
             return jsonify( {'success': False, 'error': 'incorrect token'} ), 401
 
         vacancy_db = VacancyDB( get_db() )
+        
         vacancies = vacancy_db._get_vacancies()
         if not vacancies: 
             return jsonify( {'success': False, 'error': 'vacancies not found'} )
@@ -42,8 +43,8 @@ def vacancies():
             for key in v.keys():
                 vac[key] = v[key]
             data.append(vac)
+            
         return jsonify( data )
-
     return None, 405
 
 
