@@ -52,10 +52,10 @@ form {
     width: 100%;
     height: 100px;
     display: flex;
-    padding: 15;
+    flex-direction: column;
     border: 2px solid rgb(0, 0, 0);
     margin-top: 30px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* align-items: center; */
 }
 
@@ -101,3 +101,8 @@ nav {
     color: rgb(215, 235, 236);
     border: 2px solid rgb(24, 81, 104);
 } */
+
+.reviews {
+    margin-top: 10px;
+    border: 2px solid rgb(0, 0, 0);
+}

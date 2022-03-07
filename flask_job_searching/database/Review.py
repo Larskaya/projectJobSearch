@@ -24,8 +24,12 @@ class ReviewDB:
         return True
 
     def _get_reviews_for_vacancy(self, vacancy_id):
-        self.__cur.execute('select * from reviews where vacancy_id=%s', (vacancy_id, ))
+        # self.__cur.execute('select * from reviews where vacancy_id=%s', (vacancy_id, ))
+        self.__cur.execute('''
+            select reviews.*, users.login from reviews
+            inner join users
+            on users.id = reviews.user_id where vacancy_id=%s;''', (vacancy_id, ))
         reviews = self.__cur.fetchall()
         if reviews:
-            return reviews[0]
+            return reviews
         return False

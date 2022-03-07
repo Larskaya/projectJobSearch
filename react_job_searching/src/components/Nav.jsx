@@ -62,7 +62,7 @@ export default function NavigationBar() {
                         path="/vacancies" element={<VacanciesList />} 
                     />
                     <Route
-                        path="/vacancies/:vacancy_id" element={<VacancyOpen />}
+                        path="/vacancies/:vacancyId" element={<VacancyOpen />}
                     /> 
                 </Routes>
             </nav>

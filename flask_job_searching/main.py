@@ -34,7 +34,7 @@ def after_request(response):
     response.headers['Access-Control-Allow-Headers'] = '*'
     return response
 
-from routs import registration, login, logout, vacancies
+from routs import registration, login, logout, vacancies, vacancy, reviews
 
 if __name__ == '__main__':
     os.environ['FLASK_ENV'] = 'development'

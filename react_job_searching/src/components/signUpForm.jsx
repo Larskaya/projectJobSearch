@@ -36,8 +36,8 @@ export default function SignUpForm() {
         } else {
             if (validateEmail(email) && validateLogin(login) && validatePassword(password)) {
                 setSubmitted(true);
-                let u_rep = new UserRepository(url);
-                u_rep.logIn(login, email, password, type);
+                let uRep = new UserRepository(url);
+                uRep.logIn(login, email, password, type);
 
             } else {
                 return (

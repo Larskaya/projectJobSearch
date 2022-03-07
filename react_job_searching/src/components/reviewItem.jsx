@@ -1,8 +1,7 @@
 const ReviewItem = (props) => {
-    const [review, setReview] = useState();
     return (
         <div className='reviews'> 
-            <h4> {props.review.user_id} </h4>
+            <h4> {props.review.login} </h4>
             <div>
                 {props.review.description}
             </div>

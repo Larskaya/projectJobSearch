@@ -20,8 +20,9 @@ class AccessTokenDB:
 
 
     def _check_token(self, token):
-        self.__cur.execute('select token from access_tokens where token = %s', (token, ) )
+        self.__cur.execute('select count(*) from access_tokens where token = %s', (token, ) )
         is_exist = self.__cur.fetchone()
+        print('where check token:', is_exist)
         if is_exist:
             if is_exist[0]:
                 return True
@@ -37,3 +38,12 @@ class AccessTokenDB:
             print('logout failed  - '+ str(e))
             return False
         return True
+
+
+    def _get_user_id_by_token(self, token):
+        self.__cur.execute('select user_id from access_tokens where token = %s', (token, ) )
+        user_id = self.__cur.fetchone()
+        if user_id:
+            return user_id[0]
+        else:
+            return False
