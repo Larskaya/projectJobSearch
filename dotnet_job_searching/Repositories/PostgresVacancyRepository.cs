@@ -5,11 +5,11 @@ using job_searching.Models;
 
 namespace job_searching.Repositories;
 
-public class VacancyRepository
+public class PostgresVacancyRepository : IVacancyRepository
 {
     private PostgresContext postgresContext;
     
-    public VacancyRepository(PostgresContext postgresContext)
+    public PostgresVacancyRepository(PostgresContext postgresContext)
     {
         this.postgresContext = postgresContext;
     }
@@ -63,6 +63,16 @@ public class VacancyRepository
             dbConnection.Open();
             dbConnection.Execute(sQuery, vacancy);
         }
+    }
+
+    public Vacancy Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Vacancy> GetVacancies()
+    {
+        throw new NotImplementedException();
     }
 }
 

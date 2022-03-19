@@ -6,28 +6,31 @@ using job_searching.Repositories;
 
 namespace job_searching.Controllers
 {
-	[Route("vacancies")]
+	[Route("/api/vacancies")]
 	[ApiController]
 	public class VacanciesController : ControllerBase
 	{
-		private readonly VacancyRepository vacancyRepository;
-		public VacanciesController() 
+		private readonly IVacancyRepository vacancyRepository;
+		public VacanciesController(IVacancyRepository vacancyRepository) 
 		{
-			vacancyRepository = new VacancyRepository(new PostgresContext());
+			this.vacancyRepository = vacancyRepository;
 		}
 
+		[Authorize]
 		[HttpGet]
 		public IEnumerable<Vacancy> Get()
 		{
 			return vacancyRepository.GetAll();
 		}
 
+		[Authorize]
 		[HttpGet("{id}")]
 		public Vacancy? Get(int id) 
 		{
 			return vacancyRepository.GetById(id);
 		} 
 
+		[Authorize]
 		[HttpPost]
 		public void Post([FromBody]Vacancy vacancy) 
 		{
@@ -35,6 +38,7 @@ namespace job_searching.Controllers
 				vacancyRepository.Add(vacancy);
 		}
 
+		[Authorize]
 		[HttpPut("{id}")]
 		public void Put(int id, [FromBody]Vacancy vacancy) 
 		{
