@@ -15,7 +15,7 @@ public class PostgresVacancyRepository : IVacancyRepository
     }
 
 
-    public void Add(Vacancy vacancy)
+    public void Create(Vacancy vacancy)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {

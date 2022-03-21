@@ -35,7 +35,7 @@ namespace job_searching.Controllers
 		public void Post([FromBody]Vacancy vacancy) 
 		{
 			if (ModelState.IsValid)
-				vacancyRepository.Add(vacancy);
+				vacancyRepository.Create(vacancy);
 		}
 
 		[Authorize]

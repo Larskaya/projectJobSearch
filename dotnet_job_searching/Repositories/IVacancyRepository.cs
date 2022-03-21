@@ -4,7 +4,7 @@ namespace job_searching.Repositories
 {
     public interface IVacancyRepository
     {
-        void Add(Vacancy vacancy);
+        void Create(Vacancy vacancy);
         Vacancy? GetById(int id);
         IEnumerable<Vacancy> GetAll();
         void Update(Vacancy vacancy);
