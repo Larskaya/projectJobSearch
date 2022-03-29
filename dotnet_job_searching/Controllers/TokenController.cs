@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using job_searching.Models;
 
-using job_searching.Repositories;
+using System.Security.Cryptography;
 
+using job_searching.Repositories;
+using job_searching.Requests;
 
 namespace job_searching.Controllers
 {
@@ -11,16 +13,34 @@ namespace job_searching.Controllers
     public class TokenController : ControllerBase
     {
         private readonly ITokenRepository tokenRepository;
-		public TokenController(ITokenRepository tokenRepository) 
+        private readonly IUserRepository userRepository;
+		public TokenController(ITokenRepository tokenRepository, IUserRepository userRepository) 
 		{
 			this.tokenRepository = tokenRepository;
+            this.userRepository = userRepository;
 		}
 
         [HttpPost("login")]
-        public void PostLogin([FromBody]String token) 
+        public ActionResult<string> PostLogin([FromBody] AuthRequest request) 
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) {
+                String email = request.email;
+                User? user = userRepository.Get(email);
+                if (user is null)
+                {
+                    return Unauthorized("user is null");
+                }
+                string generatedToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(18));
+                AccessToken token = new AccessToken
+                {
+                    UserId = user.Id,
+                    Token = generatedToken,
+                    CreatedAt = DateTime.Now,
+                };
                 tokenRepository.CreateToken(token);
+                return Ok(token);
+            }
+            return Unauthorized("form is not valid");
         }
 
         [Authorize]

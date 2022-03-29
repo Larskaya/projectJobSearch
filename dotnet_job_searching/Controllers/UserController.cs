@@ -17,10 +17,17 @@ namespace job_searching.Controllers
 		}
 
 		[HttpPost("register")]
-		public void PostRegister([FromBody]User user) 
+		public ActionResult PostRegister([FromBody]User user) 
 		{
-			if (ModelState.IsValid)
+			if (ModelState.IsValid) 
+			{
 				userRepository.Create(user);
+				return Ok();
+			}
+			else
+			{
+				return Forbid();
+			}
 		}
 
 		

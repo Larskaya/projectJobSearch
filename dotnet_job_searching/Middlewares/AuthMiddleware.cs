@@ -15,19 +15,25 @@ namespace job_searching.Middlewares
         {
             var executingEndpoint = context.GetEndpoint();
             var attributes = executingEndpoint?.Metadata.OfType<AuthorizeAttribute>();
-            if (attributes is not null) {
-                var token = context.Request.Query["Authorization"];
+            if (attributes is not null && attributes.Any()) 
+            {
+                var token = context.Request.Headers["Authorization"];
                 var tokenModel = tokenRepository.GetToken(token);
                 if (tokenModel is null)
                 {
-                    context.Response.StatusCode = 403;
+                    context.Response.StatusCode = 401;
                     await context.Response.WriteAsync("Token is invalid");
-                } 
+                }
                 else
                 {
                     await _next.Invoke(context);
                 }
+            } 
+            else
+            {
+                await _next.Invoke(context);
             }
+            
         }
     }
 }

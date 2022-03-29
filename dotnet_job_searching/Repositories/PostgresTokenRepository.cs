@@ -13,7 +13,7 @@ public class PostgresTokenRepository : ITokenRepository
         this.postgresContext = postgresContext;
     }
 
-    public void CreateToken(String token)
+    public void CreateToken(AccessToken token)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
