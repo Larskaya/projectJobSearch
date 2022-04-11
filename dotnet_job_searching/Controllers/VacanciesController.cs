@@ -18,14 +18,14 @@ namespace job_searching.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IEnumerable<Vacancy> Get()
+		public Task<IEnumerable<Vacancy>> Get()
 		{
 			return vacancyRepository.GetAll();
 		}
 
 		[Authorize]
 		[HttpGet("{id}")]
-		public Vacancy? Get(int id) 
+		public Task<Vacancy?> Get(int id) 
 		{
 			return vacancyRepository.GetById(id);
 		} 

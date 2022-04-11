@@ -25,7 +25,7 @@ namespace job_searching.Controllers
         {
             if (ModelState.IsValid) {
                 String email = request.email;
-                User? user = userRepository.Get(email);
+                Task<User?> user = userRepository.Get(email);
                 if (user is null)
                 {
                     return Unauthorized("user is null");

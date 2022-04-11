@@ -17,7 +17,7 @@ namespace job_searching.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IEnumerable<Review> Get(int vacancyId)
+		public Task<IEnumerable<Review>> Get(int vacancyId)
 		{
 			return reviewRepository.GetAllById(vacancyId);
 		}

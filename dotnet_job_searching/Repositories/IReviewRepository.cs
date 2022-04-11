@@ -4,7 +4,7 @@ namespace job_searching.Repositories
 {
     public interface IReviewRepository
     {
-        IEnumerable<Review> GetAllById(int id);
-        void Create(Review review);
+        Task<IEnumerable<Review>> GetAllById(int id);
+        Task Create(Review review);
     }
 }

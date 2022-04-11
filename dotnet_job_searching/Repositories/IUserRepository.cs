@@ -4,7 +4,7 @@ namespace job_searching.Repositories
 {
     public interface IUserRepository
     {
-        void Create(User user);
-        User? Get(string login);
+        Task Create(User user);
+        Task<User?> Get(string login);
     }
 }

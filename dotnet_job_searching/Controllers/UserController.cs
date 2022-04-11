@@ -29,8 +29,5 @@ namespace job_searching.Controllers
 				return Forbid();
 			}
 		}
-
-		
     }
-
 }

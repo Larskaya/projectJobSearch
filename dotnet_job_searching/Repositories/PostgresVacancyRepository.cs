@@ -15,53 +15,53 @@ public class PostgresVacancyRepository : IVacancyRepository
     }
 
 
-    public void Create(Vacancy vacancy)
+    public Task Create(Vacancy vacancy)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"INSERT INTO vacancies (title, description, user_id) VALUES (@Title, @Description, @UserId)";
             dbConnection.Open();
-            dbConnection.Execute(sQuery, vacancy);
+            return dbConnection.ExecuteAsync(sQuery, vacancy);
         }
     }
 
-    public IEnumerable<Vacancy> GetAll() 
+    public Task<IEnumerable<Vacancy>> GetAll() 
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"SELECT * FROM vacancies";
             dbConnection.Open();
-            return dbConnection.Query<Vacancy>(sQuery);
+            return dbConnection.QueryAsync<Vacancy>(sQuery);
         }
     }
 
-    public Vacancy? GetById(int id) 
+    public Task<Vacancy?> GetById(int id) 
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"SELECT * FROM vacancies WHERE id=@Id";
             dbConnection.Open();
-            return dbConnection.Query<Vacancy>(sQuery, new {Id = id}).FirstOrDefault();
+            return dbConnection.QuerySingleOrDefaultAsync<Vacancy?>(sQuery, new {Id = id});
         }
     }
 
-    public void DeleteById(int id) 
+    public Task DeleteById(int id) 
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"DELETE * FROM vacancies WHERE id=@Id";
             dbConnection.Open();
-            dbConnection.Execute(sQuery, new {Id = id});
+            return dbConnection.ExecuteAsync(sQuery, new {Id = id});
         }
     }
 
-    public void Update(Vacancy vacancy) 
+    public Task Update(Vacancy vacancy) 
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"UPDATE vacancies SET title=@Title, description=@Description FROM vacancies WHERE id=@d";
             dbConnection.Open();
-            dbConnection.Execute(sQuery, vacancy);
+            return dbConnection.ExecuteAsync(sQuery, vacancy);
         }
     }
 

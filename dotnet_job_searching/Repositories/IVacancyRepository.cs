@@ -4,11 +4,11 @@ namespace job_searching.Repositories
 {
     public interface IVacancyRepository
     {
-        void Create(Vacancy vacancy);
-        Vacancy? GetById(int id);
-        IEnumerable<Vacancy> GetAll();
-        void Update(Vacancy vacancy);
+        Task Create(Vacancy vacancy);
+        Task<Vacancy?> GetById(int id);
+        Task<IEnumerable<Vacancy>> GetAll();
+        Task Update(Vacancy vacancy);
 
-        void DeleteById(int id);
+        Task DeleteById(int id);
     }
 }

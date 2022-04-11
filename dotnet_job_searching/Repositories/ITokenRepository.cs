@@ -4,8 +4,8 @@ namespace job_searching.Repositories
 {
     public interface ITokenRepository
     {
-        AccessToken? GetToken(string token);
-        void CreateToken(AccessToken token);
-        void DeleteToken(AccessToken token);
+        Task<AccessToken?> GetToken(string token);
+        Task CreateToken(AccessToken token);
+        Task DeleteToken(AccessToken token);
     }
 }

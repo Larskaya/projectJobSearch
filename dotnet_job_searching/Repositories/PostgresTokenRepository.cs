@@ -13,33 +13,33 @@ public class PostgresTokenRepository : ITokenRepository
         this.postgresContext = postgresContext;
     }
 
-    public void CreateToken(AccessToken token)
+    public Task CreateToken(AccessToken token)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"INSERT INTO access_tokens (user_id, token, created_at) values (@UserId, @Token, @CreatedAt)";
             dbConnection.Open();
-            dbConnection.Execute(sQuery, token);
+            return dbConnection.ExecuteAsync(sQuery, token);
         }
     }
 
-    public AccessToken? GetToken(String token)
+    public Task<AccessToken?> GetToken(String token)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"SELECT * FROM access_tokens WHERE token = @Token";
             dbConnection.Open();
-            return dbConnection.Query<AccessToken>(sQuery, new {Token = token}).FirstOrDefault();
+            return dbConnection.QuerySingleOrDefaultAsync<AccessToken?>(sQuery, new {Token = token});
         }
     }
 
-    public void DeleteToken(AccessToken token)
+    public Task DeleteToken(AccessToken token)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
             string sQuery = @"DELETE FROM access_tokens WHERE token = @Token";
             dbConnection.Open();
-            dbConnection.Execute(sQuery, new {Token = token});
+            return dbConnection.ExecuteAsync(sQuery, new {Token = token});
         }
     }
 
