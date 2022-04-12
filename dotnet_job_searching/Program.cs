@@ -3,7 +3,7 @@ using job_searching;
 using job_searching.Middlewares;
 using job_searching.Repositories;
 
-
+using job_searching.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,9 @@ builder.Services.AddSingleton<PostgresContext>();
 builder.Services.AddScoped<IUserRepository, PostgresUserRepository>();
 builder.Services.AddScoped<IVacancyRepository, PostgresVacancyRepository>();
 builder.Services.AddScoped<ITokenRepository, PostgresTokenRepository>();
+builder.Services.AddScoped<IReviewRepository, PostgresReviewRepository>();
+
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

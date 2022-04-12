@@ -24,7 +24,7 @@ namespace job_searching.Controllers
         public ActionResult<string> PostLogin([FromBody] AuthRequest request) 
         {
             if (ModelState.IsValid) {
-                String email = request.email;
+                String email = request.Email;
                 Task<User?> user = userRepository.Get(email);
                 if (user is null)
                 {

@@ -23,7 +23,7 @@ public class PostgresTokenRepository : ITokenRepository
         }
     }
 
-    public Task<AccessToken?> GetToken(String token)
+    public Task<AccessToken?> GetToken(string token)
     {
         using (IDbConnection dbConnection = postgresContext.Connection)
         {
